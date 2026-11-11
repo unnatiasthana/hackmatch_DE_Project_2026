@@ -22,12 +22,12 @@
 
 | Role | Name | Enrollment No. | GitHub Username |
 |------|------|----------------|-----------------|
-| Group Lead | | | |
-| Member 2 | | | |
-| Member 3 | | | |
-| Member 4 | | | |
+| Group Lead | Unnati Asthana | 2501010483 | unnatiasthana |
+| Member 2 | Ankush Jha | 2501010064 | Ankush-Jha |
+| Member 3 | Rudraksh Bairagi | 2501010389 | RudrakshBairagi |
+| Member 4 | Ankit Jakhar | 2501010060 | jakharankit |
 
-**Team No.:** ____ · **Section:** ____ · **Repository URL:** ____
+**Team No.:** ____ · **Section:** ____ · **Repository URL:** https://github.com/unnatiasthana/hackmatch_DE_Project_2026 
 
 ---
 
@@ -176,7 +176,7 @@ Open the files yourself (a spreadsheet, `head`, or `SELECT` after a quick load i
 ### 2.1 What you must identify (for every table)
 1. **Table name and column names.** Use exactly the file names and CSV headers. The 30 queries depend on them.
 2. **Data type** of every column. Choose the *right* type, not just `TEXT` everywhere. Think about money, timestamps with a time-zone offset, yes/no columns, small whole numbers, decimals and short codes.
-3. **Primary key.** Is it one column, or a combination? (Look closely at `booking_seats`: what stops the same seat being sold twice for one show? What identifies a seat inside a screen?)
+3. **Primary key.** Is it one column or a combination? (Look closely at `booking_seats`: what stops the same seat being sold twice for one show? What identifies a seat inside a screen?)
 4. **Foreign keys.** Which column points to which table? What should happen **ON DELETE** (CASCADE, RESTRICT or SET NULL), and why?
 5. **NOT NULL vs NULL.** Some columns are empty in some rows. Find out **when** and **why**, and decide which columns must never be empty. When are `offer_code` and `review_text` empty? Why does a cancelled booking have no rows in `booking_seats`?
 6. **UNIQUE** columns (natural candidate keys such as emails, phone numbers, codes and handles).
