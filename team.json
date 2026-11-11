@@ -3,7 +3,7 @@
   "group_lead": { "name": "Unnati Asthana", "enrollment_no": "2501010483", "github": "unnatiasthana" },
   "members": [
     { "name": "Ankush Jha", "enrollment_no": "2501010064", "github": "Ankush-Jha" },
-    { "name": "Rudraksh Bairagi", "enrollment_no": "2501010389", "github": "" },
+    { "name": "Rudraksh Bairagi", "enrollment_no": "2501010389", "github": "RudrakshBairagi" },
     { "name": "Ankit Jakhar", "enrollment_no": "2501010060", "github": "jakharankit" }
   ],
   "postgres_version": "",
