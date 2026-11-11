@@ -1,0 +1,11 @@
+{
+  "team_number": "",
+  "group_lead": { "name": "Unnati Asthana", "enrollment_no": "2501010483", "github": "unnatiasthana" },
+  "members": [
+    { "name": "Ankush Jha", "enrollment_no": "2501010064", "github": "Ankush-Jha" },
+    { "name": "Rudraksh Bairagi", "enrollment_no": "2501010389", "github": "" },
+    { "name": "Ankit Jakhar", "enrollment_no": "2501010060", "github": "" }
+  ],
+  "postgres_version": "",
+  "laptop_used_for_benchmarks": ""
+}
