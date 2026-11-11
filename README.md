@@ -23,7 +23,7 @@
 | Role | Name | Enrollment No. | GitHub Username |
 |------|------|----------------|-----------------|
 | Group Lead | | | |
-| Member 2 | | | |
+| Member 2 | Ankush Jha | | |
 | Member 3 | | | |
 | Member 4 | | | |
 
