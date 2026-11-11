@@ -22,12 +22,12 @@
 
 | Role | Name | Enrollment No. | GitHub Username |
 |------|------|----------------|-----------------|
-| Group Lead | | | |
-| Member 2 | Ankush Jha | | |
-| Member 3 | | | |
-| Member 4 | | | |
+| Group Lead | Unnati Asthana | 2501010483 | unnatiasthana |
+| Member 2 | Ankush Jha | 2501010064 | Ankush-Jha |
+| Member 3 | Rudraksh Bairagi | 2501010389 | RudrakshBairagi |
+| Member 4 | Ankit Jakhar | 2501010060 | jakharankit |
 
-**Team No.:** ____ · **Section:** ____ · **Repository URL:** ____
+**Team No.:** ____ · **Section:** ____ · **Repository URL:** https://github.com/unnatiasthana/hackmatch_DE_Project_2026 
 
 ---
 
