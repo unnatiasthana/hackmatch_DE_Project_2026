@@ -2,7 +2,7 @@
 
 > **Note:** This file contains a [Mermaid](https://mermaid.js.org/) `erDiagram` block.  
 > Render it with any Mermaid-compatible viewer (e.g., the Mermaid Live Editor at https://mermaid.live, GitHub Markdown preview, VS Code Mermaid extension, or `mmdc` CLI to export to PNG).  
-> To generate the PNG: `mmdc -i diagrams/er_diagram.md -o diagrams/er_diagram.png`
+> To generate the PNG: `mmdc -i diagrams/er_diagram.md -o diagrams/er_diagram.pn`
 
 ```mermaid
 erDiagram
