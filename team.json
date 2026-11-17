@@ -7,6 +7,6 @@
     { "name": "Ankit Jakhar", "enrollment_no": "2501010060", "github": "jakharankit" }
   ],
   "postgres_version": "15.20",
-  "laptop_used_for_benchmarks": "MacBook Air M4, 16GB RAM, macOS 27.0.1"
+  "laptop_used_for_benchmarks": "MacBook Pro M4, 16GB RAM, macOS"
 }
 

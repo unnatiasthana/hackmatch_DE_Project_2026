@@ -2,7 +2,7 @@
 
 ## Setup
 
-- **Machine:** MacBook Air M4, 16 GB RAM, macOS 27.0.1
+- **Machine:** MacBook Pro M4, 16 GB RAM, macOS
 - **PostgreSQL:** 15.20 (Homebrew), default config (shared_buffers = 128 MB, work_mem = 4 MB)
 - **Data:** seed_data.zip loaded via `sql/02_load_data.sql` — all 11 tables, ~300K bookings, zero integrity violations
 
@@ -100,3 +100,4 @@ All writes are fast (< 11 ms). W02 is the slowest at ~10 ms since it involves fi
 - **Queries > 20 ms:** above + R17, R08, R22, R25, R16 (12 queries total)
 
 The raw EXPLAIN ANALYZE plans for each query (all 3 runs) are saved in `benchmarks/results/baseline/`. The summary CSV is at `benchmarks/results/baseline/summary.csv`.
+
