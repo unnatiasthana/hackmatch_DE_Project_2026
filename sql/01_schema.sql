@@ -60,7 +60,7 @@ CREATE TABLE screens (
         ON DELETE RESTRICT,
 
     CONSTRAINT chk_screens_type
-        CHECK (screen_type IN ('STANDARD', 'IMAX', '4DX', 'SCREENX', 'DOLBY', 'LUXE', 'MX4D')),
+        CHECK (screen_type IN ('STANDARD', 'IMAX', '4DX', 'SCREENX', 'DOLBY', 'LUXE', 'MX4D', 'GOLD')),
 
     CONSTRAINT chk_screens_total_seats
         CHECK (total_seats > 0)
@@ -141,7 +141,7 @@ CREATE TABLE shows (
         ON DELETE RESTRICT,
 
     CONSTRAINT chk_shows_format
-        CHECK (format IN ('2D', '3D', 'IMAX', '4DX', 'DOLBY', 'SCREENX')),
+        CHECK (format IN ('2D', '3D', 'IMAX', '4DX', 'DOLBY', 'SCREENX', 'GOLD')),
 
     CONSTRAINT chk_shows_ends_after_starts
         CHECK (ends_at > starts_at),
@@ -245,10 +245,10 @@ CREATE TABLE bookings (
         CHECK (booking_code ~ '^BMS[0-9A-F]{7}$'),
 
     CONSTRAINT chk_bookings_status
-        CHECK (status IN ('PENDING', 'CONFIRMED', 'CANCELLED')),
+        CHECK (status IN ('PENDING', 'CONFIRMED', 'CANCELLED', 'PAYMENT_FAILED')),
 
     CONSTRAINT chk_bookings_payment_method
-        CHECK (payment_method IN ('UPI', 'CREDIT_CARD', 'DEBIT_CARD', 'WALLET', 'NET_BANKING', 'GIFT_CARD')),
+        CHECK (payment_method IN ('UPI', 'CREDIT_CARD', 'DEBIT_CARD', 'WALLET', 'NET_BANKING', 'GIFT_CARD', 'NETBANKING', 'CARD')),
 
     CONSTRAINT chk_bookings_num_tickets
         CHECK (num_tickets > 0),
