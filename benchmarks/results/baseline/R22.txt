@@ -1,0 +1,27 @@
+=== R22 run 1 ===
+Limit  (cost=8618.62..8620.78 rows=25 width=41) (actual time=28.377..28.383 rows=25 loops=1)
+  Buffers: shared hit=100638
+  ->  Index Scan Backward using idx_bookings_booked_at on bookings  (cost=0.42..12935.83 rows=150094 width=41) (actual time=0.009..26.580 rows=100025 loops=1)
+        Buffers: shared hit=100638
+Planning:
+  Buffers: shared hit=184
+Planning Time: 0.306 ms
+Execution Time: 28.397 ms
+=== R22 run 2 ===
+Limit  (cost=8618.62..8620.78 rows=25 width=41) (actual time=27.654..27.660 rows=25 loops=1)
+  Buffers: shared hit=100638
+  ->  Index Scan Backward using idx_bookings_booked_at on bookings  (cost=0.42..12935.83 rows=150094 width=41) (actual time=0.009..25.857 rows=100025 loops=1)
+        Buffers: shared hit=100638
+Planning:
+  Buffers: shared hit=184
+Planning Time: 0.370 ms
+Execution Time: 27.672 ms
+=== R22 run 3 ===
+Limit  (cost=8618.62..8620.78 rows=25 width=41) (actual time=27.578..27.584 rows=25 loops=1)
+  Buffers: shared hit=100638
+  ->  Index Scan Backward using idx_bookings_booked_at on bookings  (cost=0.42..12935.83 rows=150094 width=41) (actual time=0.009..25.782 rows=100025 loops=1)
+        Buffers: shared hit=100638
+Planning:
+  Buffers: shared hit=184
+Planning Time: 0.374 ms
+Execution Time: 27.598 ms

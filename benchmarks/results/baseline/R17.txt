@@ -1,0 +1,87 @@
+=== R17 run 1 ===
+Sort  (cost=9141.66..9142.05 rows=156 width=15) (actual time=34.816..34.817 rows=28 loops=1)
+  Sort Key: se.row_label, se.seat_number
+  Sort Method: quicksort  Memory: 26kB
+  Buffers: shared hit=6381
+  ->  Hash Anti Join  (cost=9122.02..9135.98 rows=156 width=15) (actual time=34.786..34.794 rows=28 loops=1)
+        Hash Cond: (se.seat_id = bs.seat_id)
+        Buffers: shared hit=6375
+        ->  Index Scan using idx_seats_screen_id on seats se  (cost=0.29..12.16 rows=164 width=15) (actual time=0.005..0.007 rows=40 loops=1)
+              Index Cond: (screen_id = 101)
+              Buffers: shared hit=3
+        ->  Hash  (cost=7970.43..7970.43 rows=92104 width=4) (actual time=34.720..34.720 rows=109867 loops=1)
+              Buckets: 131072  Batches: 1  Memory Usage: 4887kB
+              Buffers: shared hit=6372
+              ->  Hash Join  (cost=2264.00..7970.43 rows=92104 width=4) (actual time=5.213..29.965 rows=109867 loops=1)
+                    Hash Cond: (bs.show_id = s.show_id)
+                    Buffers: shared hit=6372
+                    ->  Seq Scan on booking_seats bs  (cost=0.00..4917.89 rows=300389 width=8) (actual time=0.003..8.518 rows=300389 loops=1)
+                          Buffers: shared hit=1914
+                    ->  Hash  (cost=1650.63..1650.63 rows=49069 width=4) (actual time=5.181..5.181 rows=48990 loops=1)
+                          Buckets: 65536  Batches: 1  Memory Usage: 2235kB
+                          Buffers: shared hit=4458
+                          ->  Index Scan using idx_shows_starts_at on shows s  (cost=0.29..1650.63 rows=49069 width=4) (actual time=0.011..3.290 rows=48990 loops=1)
+                                Index Cond: ((starts_at >= '2026-06-01 00:00:00+05:30'::timestamp with time zone) AND (starts_at < '2026-07-01 00:00:00+05:30'::timestamp with time zone))
+                                Buffers: shared hit=4458
+Planning:
+  Buffers: shared hit=401
+Planning Time: 0.709 ms
+Execution Time: 34.889 ms
+=== R17 run 2 ===
+Sort  (cost=9141.66..9142.05 rows=156 width=15) (actual time=35.052..35.054 rows=28 loops=1)
+  Sort Key: se.row_label, se.seat_number
+  Sort Method: quicksort  Memory: 26kB
+  Buffers: shared hit=6381
+  ->  Hash Anti Join  (cost=9122.02..9135.98 rows=156 width=15) (actual time=35.017..35.035 rows=28 loops=1)
+        Hash Cond: (se.seat_id = bs.seat_id)
+        Buffers: shared hit=6375
+        ->  Index Scan using idx_seats_screen_id on seats se  (cost=0.29..12.16 rows=164 width=15) (actual time=0.005..0.011 rows=40 loops=1)
+              Index Cond: (screen_id = 101)
+              Buffers: shared hit=3
+        ->  Hash  (cost=7970.43..7970.43 rows=92104 width=4) (actual time=34.954..34.955 rows=109867 loops=1)
+              Buckets: 131072  Batches: 1  Memory Usage: 4887kB
+              Buffers: shared hit=6372
+              ->  Hash Join  (cost=2264.00..7970.43 rows=92104 width=4) (actual time=5.410..30.167 rows=109867 loops=1)
+                    Hash Cond: (bs.show_id = s.show_id)
+                    Buffers: shared hit=6372
+                    ->  Seq Scan on booking_seats bs  (cost=0.00..4917.89 rows=300389 width=8) (actual time=0.003..8.641 rows=300389 loops=1)
+                          Buffers: shared hit=1914
+                    ->  Hash  (cost=1650.63..1650.63 rows=49069 width=4) (actual time=5.366..5.367 rows=48990 loops=1)
+                          Buckets: 65536  Batches: 1  Memory Usage: 2235kB
+                          Buffers: shared hit=4458
+                          ->  Index Scan using idx_shows_starts_at on shows s  (cost=0.29..1650.63 rows=49069 width=4) (actual time=0.010..3.349 rows=48990 loops=1)
+                                Index Cond: ((starts_at >= '2026-06-01 00:00:00+05:30'::timestamp with time zone) AND (starts_at < '2026-07-01 00:00:00+05:30'::timestamp with time zone))
+                                Buffers: shared hit=4458
+Planning:
+  Buffers: shared hit=401
+Planning Time: 0.679 ms
+Execution Time: 35.125 ms
+=== R17 run 3 ===
+Sort  (cost=9141.66..9142.05 rows=156 width=15) (actual time=35.590..35.591 rows=28 loops=1)
+  Sort Key: se.row_label, se.seat_number
+  Sort Method: quicksort  Memory: 26kB
+  Buffers: shared hit=6381
+  ->  Hash Anti Join  (cost=9122.02..9135.98 rows=156 width=15) (actual time=35.561..35.570 rows=28 loops=1)
+        Hash Cond: (se.seat_id = bs.seat_id)
+        Buffers: shared hit=6375
+        ->  Index Scan using idx_seats_screen_id on seats se  (cost=0.29..12.16 rows=164 width=15) (actual time=0.006..0.009 rows=40 loops=1)
+              Index Cond: (screen_id = 101)
+              Buffers: shared hit=3
+        ->  Hash  (cost=7970.43..7970.43 rows=92104 width=4) (actual time=35.468..35.469 rows=109867 loops=1)
+              Buckets: 131072  Batches: 1  Memory Usage: 4887kB
+              Buffers: shared hit=6372
+              ->  Hash Join  (cost=2264.00..7970.43 rows=92104 width=4) (actual time=5.287..30.632 rows=109867 loops=1)
+                    Hash Cond: (bs.show_id = s.show_id)
+                    Buffers: shared hit=6372
+                    ->  Seq Scan on booking_seats bs  (cost=0.00..4917.89 rows=300389 width=8) (actual time=0.003..8.760 rows=300389 loops=1)
+                          Buffers: shared hit=1914
+                    ->  Hash  (cost=1650.63..1650.63 rows=49069 width=4) (actual time=5.254..5.254 rows=48990 loops=1)
+                          Buckets: 65536  Batches: 1  Memory Usage: 2235kB
+                          Buffers: shared hit=4458
+                          ->  Index Scan using idx_shows_starts_at on shows s  (cost=0.29..1650.63 rows=49069 width=4) (actual time=0.011..3.299 rows=48990 loops=1)
+                                Index Cond: ((starts_at >= '2026-06-01 00:00:00+05:30'::timestamp with time zone) AND (starts_at < '2026-07-01 00:00:00+05:30'::timestamp with time zone))
+                                Buffers: shared hit=4458
+Planning:
+  Buffers: shared hit=401
+Planning Time: 0.656 ms
+Execution Time: 35.668 ms
