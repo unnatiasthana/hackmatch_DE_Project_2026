@@ -1,0 +1,66 @@
+=== R10 run 1 ===
+Sort  (cost=8473.01..8513.63 rows=16245 width=44) (actual time=26.847..26.851 rows=209 loops=1)
+  Sort Key: ((sub.next_starts - sub.ends_at)), sub.screen_id
+  Sort Method: quicksort  Memory: 42kB
+  Buffers: shared hit=4469, temp read=253 written=254
+  ->  Subquery Scan on sub  (cost=5459.46..7336.86 rows=16245 width=44) (actual time=14.294..26.800 rows=209 loops=1)
+        Filter: ((sub.next_starts IS NOT NULL) AND ((sub.next_starts - sub.ends_at) < '00:30:00'::interval))
+        Rows Removed by Filter: 48781
+        Buffers: shared hit=4461, temp read=253 written=254
+        ->  WindowAgg  (cost=5459.46..6561.54 rows=48981 width=36) (actual time=14.242..25.110 rows=48990 loops=1)
+              Buffers: shared hit=4461, temp read=253 written=254
+              ->  Sort  (cost=5459.46..5581.92 rows=48981 width=24) (actual time=14.230..16.031 rows=48990 loops=1)
+                    Sort Key: shows.screen_id, shows.starts_at
+                    Sort Method: external merge  Disk: 2024kB
+                    Buffers: shared hit=4461, temp read=253 written=254
+                    ->  Index Scan using idx_shows_starts_at on shows  (cost=0.29..1643.86 rows=48981 width=24) (actual time=0.011..3.865 rows=48990 loops=1)
+                          Index Cond: ((starts_at >= '2026-06-01 00:00:00+05:30'::timestamp with time zone) AND (starts_at < '2026-07-01 00:00:00+05:30'::timestamp with time zone))
+                          Buffers: shared hit=4458
+Planning:
+  Buffers: shared hit=226
+Planning Time: 0.363 ms
+Execution Time: 27.351 ms
+=== R10 run 2 ===
+Sort  (cost=8473.01..8513.63 rows=16245 width=44) (actual time=26.082..26.087 rows=209 loops=1)
+  Sort Key: ((sub.next_starts - sub.ends_at)), sub.screen_id
+  Sort Method: quicksort  Memory: 42kB
+  Buffers: shared hit=4469, temp read=253 written=254
+  ->  Subquery Scan on sub  (cost=5459.46..7336.86 rows=16245 width=44) (actual time=13.748..26.035 rows=209 loops=1)
+        Filter: ((sub.next_starts IS NOT NULL) AND ((sub.next_starts - sub.ends_at) < '00:30:00'::interval))
+        Rows Removed by Filter: 48781
+        Buffers: shared hit=4461, temp read=253 written=254
+        ->  WindowAgg  (cost=5459.46..6561.54 rows=48981 width=36) (actual time=13.694..24.397 rows=48990 loops=1)
+              Buffers: shared hit=4461, temp read=253 written=254
+              ->  Sort  (cost=5459.46..5581.92 rows=48981 width=24) (actual time=13.683..15.445 rows=48990 loops=1)
+                    Sort Key: shows.screen_id, shows.starts_at
+                    Sort Method: external merge  Disk: 2024kB
+                    Buffers: shared hit=4461, temp read=253 written=254
+                    ->  Index Scan using idx_shows_starts_at on shows  (cost=0.29..1643.86 rows=48981 width=24) (actual time=0.012..3.821 rows=48990 loops=1)
+                          Index Cond: ((starts_at >= '2026-06-01 00:00:00+05:30'::timestamp with time zone) AND (starts_at < '2026-07-01 00:00:00+05:30'::timestamp with time zone))
+                          Buffers: shared hit=4458
+Planning:
+  Buffers: shared hit=226
+Planning Time: 0.354 ms
+Execution Time: 26.586 ms
+=== R10 run 3 ===
+Sort  (cost=8473.01..8513.63 rows=16245 width=44) (actual time=26.418..26.421 rows=209 loops=1)
+  Sort Key: ((sub.next_starts - sub.ends_at)), sub.screen_id
+  Sort Method: quicksort  Memory: 42kB
+  Buffers: shared hit=4469, temp read=253 written=254
+  ->  Subquery Scan on sub  (cost=5459.46..7336.86 rows=16245 width=44) (actual time=14.067..26.374 rows=209 loops=1)
+        Filter: ((sub.next_starts IS NOT NULL) AND ((sub.next_starts - sub.ends_at) < '00:30:00'::interval))
+        Rows Removed by Filter: 48781
+        Buffers: shared hit=4461, temp read=253 written=254
+        ->  WindowAgg  (cost=5459.46..6561.54 rows=48981 width=36) (actual time=13.994..24.665 rows=48990 loops=1)
+              Buffers: shared hit=4461, temp read=253 written=254
+              ->  Sort  (cost=5459.46..5581.92 rows=48981 width=24) (actual time=13.983..15.761 rows=48990 loops=1)
+                    Sort Key: shows.screen_id, shows.starts_at
+                    Sort Method: external merge  Disk: 2024kB
+                    Buffers: shared hit=4461, temp read=253 written=254
+                    ->  Index Scan using idx_shows_starts_at on shows  (cost=0.29..1643.86 rows=48981 width=24) (actual time=0.009..3.907 rows=48990 loops=1)
+                          Index Cond: ((starts_at >= '2026-06-01 00:00:00+05:30'::timestamp with time zone) AND (starts_at < '2026-07-01 00:00:00+05:30'::timestamp with time zone))
+                          Buffers: shared hit=4458
+Planning:
+  Buffers: shared hit=226
+Planning Time: 0.376 ms
+Execution Time: 26.897 ms

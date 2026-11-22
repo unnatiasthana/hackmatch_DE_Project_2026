@@ -1,0 +1,60 @@
+=== R19 run 1 ===
+Sort  (cost=1117.01..1117.33 rows=130 width=24) (actual time=0.359..0.363 rows=207 loops=1)
+  Sort Key: ((SubPlan 1)) DESC, s.starts_at
+  Sort Method: quicksort  Memory: 39kB
+  Buffers: shared hit=633
+  ->  Index Only Scan using idx_shows_movie_starts on shows s  (cost=0.42..1112.45 rows=130 width=24) (actual time=0.057..0.327 rows=207 loops=1)
+        Index Cond: ((movie_id = 2) AND (starts_at >= '2026-06-01 00:00:00+05:30'::timestamp with time zone) AND (starts_at < '2026-07-01 00:00:00+05:30'::timestamp with time zone))
+        Heap Fetches: 0
+        Buffers: shared hit=627
+        SubPlan 1
+          ->  Aggregate  (cost=8.46..8.47 rows=1 width=8) (actual time=0.001..0.001 rows=1 loops=207)
+                Buffers: shared hit=622
+                ->  Index Only Scan using idx_bookings_confirmed on bookings b  (cost=0.42..8.46 rows=2 width=2) (actual time=0.001..0.001 rows=1 loops=207)
+                      Index Cond: (show_id = s.show_id)
+                      Heap Fetches: 0
+                      Buffers: shared hit=622
+Planning:
+  Buffers: shared hit=432
+Planning Time: 0.648 ms
+Execution Time: 0.385 ms
+=== R19 run 2 ===
+Sort  (cost=1117.01..1117.33 rows=130 width=24) (actual time=0.329..0.332 rows=207 loops=1)
+  Sort Key: ((SubPlan 1)) DESC, s.starts_at
+  Sort Method: quicksort  Memory: 39kB
+  Buffers: shared hit=633
+  ->  Index Only Scan using idx_shows_movie_starts on shows s  (cost=0.42..1112.45 rows=130 width=24) (actual time=0.056..0.300 rows=207 loops=1)
+        Index Cond: ((movie_id = 2) AND (starts_at >= '2026-06-01 00:00:00+05:30'::timestamp with time zone) AND (starts_at < '2026-07-01 00:00:00+05:30'::timestamp with time zone))
+        Heap Fetches: 0
+        Buffers: shared hit=627
+        SubPlan 1
+          ->  Aggregate  (cost=8.46..8.47 rows=1 width=8) (actual time=0.001..0.001 rows=1 loops=207)
+                Buffers: shared hit=622
+                ->  Index Only Scan using idx_bookings_confirmed on bookings b  (cost=0.42..8.46 rows=2 width=2) (actual time=0.001..0.001 rows=1 loops=207)
+                      Index Cond: (show_id = s.show_id)
+                      Heap Fetches: 0
+                      Buffers: shared hit=622
+Planning:
+  Buffers: shared hit=432
+Planning Time: 0.681 ms
+Execution Time: 0.354 ms
+=== R19 run 3 ===
+Sort  (cost=1117.01..1117.33 rows=130 width=24) (actual time=0.333..0.337 rows=207 loops=1)
+  Sort Key: ((SubPlan 1)) DESC, s.starts_at
+  Sort Method: quicksort  Memory: 39kB
+  Buffers: shared hit=633
+  ->  Index Only Scan using idx_shows_movie_starts on shows s  (cost=0.42..1112.45 rows=130 width=24) (actual time=0.059..0.304 rows=207 loops=1)
+        Index Cond: ((movie_id = 2) AND (starts_at >= '2026-06-01 00:00:00+05:30'::timestamp with time zone) AND (starts_at < '2026-07-01 00:00:00+05:30'::timestamp with time zone))
+        Heap Fetches: 0
+        Buffers: shared hit=627
+        SubPlan 1
+          ->  Aggregate  (cost=8.46..8.47 rows=1 width=8) (actual time=0.001..0.001 rows=1 loops=207)
+                Buffers: shared hit=622
+                ->  Index Only Scan using idx_bookings_confirmed on bookings b  (cost=0.42..8.46 rows=2 width=2) (actual time=0.001..0.001 rows=1 loops=207)
+                      Index Cond: (show_id = s.show_id)
+                      Heap Fetches: 0
+                      Buffers: shared hit=622
+Planning:
+  Buffers: shared hit=432
+Planning Time: 0.786 ms
+Execution Time: 0.360 ms

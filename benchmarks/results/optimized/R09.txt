@@ -1,0 +1,42 @@
+=== R09 run 1 ===
+Sort  (cost=14.35..14.36 rows=5 width=18) (actual time=0.032..0.032 rows=6 loops=1)
+  Sort Key: booked_at
+  Sort Method: quicksort  Memory: 25kB
+  Buffers: shared hit=15
+  ->  Index Scan using idx_bookings_status on bookings  (cost=0.29..14.29 rows=5 width=18) (actual time=0.013..0.025 rows=6 loops=1)
+        Index Cond: ((status)::text = 'PENDING'::text)
+        Filter: (booked_at < ('2026-06-30 23:59:00+05:30'::timestamp with time zone - '00:10:00'::interval))
+        Rows Removed by Filter: 4
+        Buffers: shared hit=12
+Planning:
+  Buffers: shared hit=280
+Planning Time: 0.419 ms
+Execution Time: 0.042 ms
+=== R09 run 2 ===
+Sort  (cost=14.35..14.36 rows=5 width=18) (actual time=0.036..0.036 rows=6 loops=1)
+  Sort Key: booked_at
+  Sort Method: quicksort  Memory: 25kB
+  Buffers: shared hit=15
+  ->  Index Scan using idx_bookings_status on bookings  (cost=0.29..14.29 rows=5 width=18) (actual time=0.013..0.028 rows=6 loops=1)
+        Index Cond: ((status)::text = 'PENDING'::text)
+        Filter: (booked_at < ('2026-06-30 23:59:00+05:30'::timestamp with time zone - '00:10:00'::interval))
+        Rows Removed by Filter: 4
+        Buffers: shared hit=12
+Planning:
+  Buffers: shared hit=280
+Planning Time: 0.531 ms
+Execution Time: 0.048 ms
+=== R09 run 3 ===
+Sort  (cost=14.35..14.36 rows=5 width=18) (actual time=0.033..0.033 rows=6 loops=1)
+  Sort Key: booked_at
+  Sort Method: quicksort  Memory: 25kB
+  Buffers: shared hit=15
+  ->  Index Scan using idx_bookings_status on bookings  (cost=0.29..14.29 rows=5 width=18) (actual time=0.012..0.026 rows=6 loops=1)
+        Index Cond: ((status)::text = 'PENDING'::text)
+        Filter: (booked_at < ('2026-06-30 23:59:00+05:30'::timestamp with time zone - '00:10:00'::interval))
+        Rows Removed by Filter: 4
+        Buffers: shared hit=12
+Planning:
+  Buffers: shared hit=280
+Planning Time: 0.430 ms
+Execution Time: 0.044 ms

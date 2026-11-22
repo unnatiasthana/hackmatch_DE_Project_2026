@@ -1,0 +1,93 @@
+=== R07 run 1 ===
+Sort  (cost=85.42..85.49 rows=30 width=61) (actual time=0.142..0.144 rows=17 loops=1)
+  Sort Key: s.starts_at
+  Sort Method: quicksort  Memory: 26kB
+  Buffers: shared hit=82
+  ->  GroupAggregate  (cost=83.63..84.68 rows=30 width=61) (actual time=0.107..0.124 rows=17 loops=1)
+        Group Key: s.show_id, sc.screen_name, sc.total_seats
+        Buffers: shared hit=79
+        ->  Sort  (cost=83.63..83.70 rows=30 width=25) (actual time=0.097..0.100 rows=45 loops=1)
+              Sort Key: s.show_id, sc.screen_name, sc.total_seats
+              Sort Method: quicksort  Memory: 28kB
+              Buffers: shared hit=79
+              ->  Nested Loop Left Join  (cost=0.99..82.89 rows=30 width=25) (actual time=0.028..0.069 rows=45 loops=1)
+                    Buffers: shared hit=70
+                    ->  Nested Loop  (cost=0.57..34.82 rows=16 width=21) (actual time=0.017..0.036 rows=17 loops=1)
+                          Buffers: shared hit=18
+                          ->  Index Scan using idx_screens_venue_id on screens sc  (cost=0.15..8.24 rows=5 width=13) (actual time=0.003..0.004 rows=5 loops=1)
+                                Index Cond: (venue_id = 11)
+                                Buffers: shared hit=2
+                          ->  Index Only Scan using idx_shows_screen_starts on shows s  (cost=0.42..5.29 rows=3 width=16) (actual time=0.005..0.005 rows=3 loops=5)
+                                Index Cond: ((screen_id = sc.screen_id) AND (starts_at >= '2026-06-28 00:00:00+05:30'::timestamp with time zone) AND (starts_at < '2026-06-29 00:00:00+05:30'::timestamp with time zone))
+                                Heap Fetches: 0
+                                Buffers: shared hit=16
+                    ->  Index Only Scan using pk_booking_seats on booking_seats bs  (cost=0.42..2.95 rows=5 width=8) (actual time=0.001..0.001 rows=2 loops=17)
+                          Index Cond: (show_id = s.show_id)
+                          Heap Fetches: 0
+                          Buffers: shared hit=52
+Planning:
+  Buffers: shared hit=394
+Planning Time: 1.790 ms
+Execution Time: 0.233 ms
+=== R07 run 2 ===
+Sort  (cost=85.42..85.49 rows=30 width=61) (actual time=0.183..0.184 rows=17 loops=1)
+  Sort Key: s.starts_at
+  Sort Method: quicksort  Memory: 26kB
+  Buffers: shared hit=82
+  ->  GroupAggregate  (cost=83.63..84.68 rows=30 width=61) (actual time=0.145..0.162 rows=17 loops=1)
+        Group Key: s.show_id, sc.screen_name, sc.total_seats
+        Buffers: shared hit=79
+        ->  Sort  (cost=83.63..83.70 rows=30 width=25) (actual time=0.134..0.136 rows=45 loops=1)
+              Sort Key: s.show_id, sc.screen_name, sc.total_seats
+              Sort Method: quicksort  Memory: 28kB
+              Buffers: shared hit=79
+              ->  Nested Loop Left Join  (cost=0.99..82.89 rows=30 width=25) (actual time=0.033..0.074 rows=45 loops=1)
+                    Buffers: shared hit=70
+                    ->  Nested Loop  (cost=0.57..34.82 rows=16 width=21) (actual time=0.021..0.041 rows=17 loops=1)
+                          Buffers: shared hit=18
+                          ->  Index Scan using idx_screens_venue_id on screens sc  (cost=0.15..8.24 rows=5 width=13) (actual time=0.004..0.005 rows=5 loops=1)
+                                Index Cond: (venue_id = 11)
+                                Buffers: shared hit=2
+                          ->  Index Only Scan using idx_shows_screen_starts on shows s  (cost=0.42..5.29 rows=3 width=16) (actual time=0.006..0.006 rows=3 loops=5)
+                                Index Cond: ((screen_id = sc.screen_id) AND (starts_at >= '2026-06-28 00:00:00+05:30'::timestamp with time zone) AND (starts_at < '2026-06-29 00:00:00+05:30'::timestamp with time zone))
+                                Heap Fetches: 0
+                                Buffers: shared hit=16
+                    ->  Index Only Scan using pk_booking_seats on booking_seats bs  (cost=0.42..2.95 rows=5 width=8) (actual time=0.001..0.002 rows=2 loops=17)
+                          Index Cond: (show_id = s.show_id)
+                          Heap Fetches: 0
+                          Buffers: shared hit=52
+Planning:
+  Buffers: shared hit=394
+Planning Time: 1.601 ms
+Execution Time: 0.267 ms
+=== R07 run 3 ===
+Sort  (cost=85.42..85.49 rows=30 width=61) (actual time=0.141..0.142 rows=17 loops=1)
+  Sort Key: s.starts_at
+  Sort Method: quicksort  Memory: 26kB
+  Buffers: shared hit=82
+  ->  GroupAggregate  (cost=83.63..84.68 rows=30 width=61) (actual time=0.109..0.126 rows=17 loops=1)
+        Group Key: s.show_id, sc.screen_name, sc.total_seats
+        Buffers: shared hit=79
+        ->  Sort  (cost=83.63..83.70 rows=30 width=25) (actual time=0.099..0.101 rows=45 loops=1)
+              Sort Key: s.show_id, sc.screen_name, sc.total_seats
+              Sort Method: quicksort  Memory: 28kB
+              Buffers: shared hit=79
+              ->  Nested Loop Left Join  (cost=0.99..82.89 rows=30 width=25) (actual time=0.025..0.070 rows=45 loops=1)
+                    Buffers: shared hit=70
+                    ->  Nested Loop  (cost=0.57..34.82 rows=16 width=21) (actual time=0.015..0.037 rows=17 loops=1)
+                          Buffers: shared hit=18
+                          ->  Index Scan using idx_screens_venue_id on screens sc  (cost=0.15..8.24 rows=5 width=13) (actual time=0.003..0.004 rows=5 loops=1)
+                                Index Cond: (venue_id = 11)
+                                Buffers: shared hit=2
+                          ->  Index Only Scan using idx_shows_screen_starts on shows s  (cost=0.42..5.29 rows=3 width=16) (actual time=0.005..0.005 rows=3 loops=5)
+                                Index Cond: ((screen_id = sc.screen_id) AND (starts_at >= '2026-06-28 00:00:00+05:30'::timestamp with time zone) AND (starts_at < '2026-06-29 00:00:00+05:30'::timestamp with time zone))
+                                Heap Fetches: 0
+                                Buffers: shared hit=16
+                    ->  Index Only Scan using pk_booking_seats on booking_seats bs  (cost=0.42..2.95 rows=5 width=8) (actual time=0.001..0.002 rows=2 loops=17)
+                          Index Cond: (show_id = s.show_id)
+                          Heap Fetches: 0
+                          Buffers: shared hit=52
+Planning:
+  Buffers: shared hit=394
+Planning Time: 1.466 ms
+Execution Time: 0.205 ms

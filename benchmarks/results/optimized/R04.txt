@@ -1,0 +1,24 @@
+=== R04 run 1 ===
+Index Scan using uq_bookings_code on bookings  (cost=0.42..8.44 rows=1 width=38) (actual time=0.095..0.098 rows=1 loops=1)
+  Index Cond: ((booking_code)::text = 'BMSA45E9F9'::text)
+  Buffers: shared hit=4
+Planning:
+  Buffers: shared hit=255
+Planning Time: 3.950 ms
+Execution Time: 0.141 ms
+=== R04 run 2 ===
+Index Scan using uq_bookings_code on bookings  (cost=0.42..8.44 rows=1 width=38) (actual time=0.032..0.032 rows=1 loops=1)
+  Index Cond: ((booking_code)::text = 'BMSA45E9F9'::text)
+  Buffers: shared hit=4
+Planning:
+  Buffers: shared hit=255
+Planning Time: 0.924 ms
+Execution Time: 0.059 ms
+=== R04 run 3 ===
+Index Scan using uq_bookings_code on bookings  (cost=0.42..8.44 rows=1 width=38) (actual time=0.032..0.032 rows=1 loops=1)
+  Index Cond: ((booking_code)::text = 'BMSA45E9F9'::text)
+  Buffers: shared hit=4
+Planning:
+  Buffers: shared hit=255
+Planning Time: 0.998 ms
+Execution Time: 0.059 ms
