@@ -1,0 +1,45 @@
+=== R09 run 1 ===
+Sort  (cost=155.13..155.38 rows=100 width=18) (actual time=0.675..0.677 rows=85.00 loops=1)
+  Sort Key: booked_at
+  Sort Method: quicksort  Memory: 28kB
+  Buffers: shared hit=72 read=127
+  ->  Index Scan using idx_bookings_status on bookings  (cost=0.43..151.81 rows=100 width=18) (actual time=0.238..0.662 rows=85.00 loops=1)
+        Index Cond: ((status)::text = 'PENDING'::text)
+        Filter: (booked_at < ('2026-06-30 23:59:00+05:30'::timestamp with time zone - '00:10:00'::interval))
+        Rows Removed by Filter: 108
+        Index Searches: 1
+        Buffers: shared hit=69 read=127
+Planning:
+  Buffers: shared hit=284 read=3
+Planning Time: 0.661 ms
+Execution Time: 0.689 ms
+=== R09 run 2 ===
+Sort  (cost=155.13..155.38 rows=100 width=18) (actual time=0.229..0.230 rows=85.00 loops=1)
+  Sort Key: booked_at
+  Sort Method: quicksort  Memory: 28kB
+  Buffers: shared hit=199
+  ->  Index Scan using idx_bookings_status on bookings  (cost=0.43..151.81 rows=100 width=18) (actual time=0.012..0.218 rows=85.00 loops=1)
+        Index Cond: ((status)::text = 'PENDING'::text)
+        Filter: (booked_at < ('2026-06-30 23:59:00+05:30'::timestamp with time zone - '00:10:00'::interval))
+        Rows Removed by Filter: 108
+        Index Searches: 1
+        Buffers: shared hit=196
+Planning:
+  Buffers: shared hit=287
+Planning Time: 0.469 ms
+Execution Time: 0.241 ms
+=== R09 run 3 ===
+Sort  (cost=155.13..155.38 rows=100 width=18) (actual time=0.252..0.254 rows=85.00 loops=1)
+  Sort Key: booked_at
+  Sort Method: quicksort  Memory: 28kB
+  Buffers: shared hit=199
+  ->  Index Scan using idx_bookings_status on bookings  (cost=0.43..151.81 rows=100 width=18) (actual time=0.014..0.239 rows=85.00 loops=1)
+        Index Cond: ((status)::text = 'PENDING'::text)
+        Filter: (booked_at < ('2026-06-30 23:59:00+05:30'::timestamp with time zone - '00:10:00'::interval))
+        Rows Removed by Filter: 108
+        Index Searches: 1
+        Buffers: shared hit=196
+Planning:
+  Buffers: shared hit=287
+Planning Time: 0.521 ms
+Execution Time: 0.265 ms

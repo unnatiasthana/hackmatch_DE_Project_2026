@@ -1,0 +1,168 @@
+=== R16 run 1 ===
+Sort  (cost=113992.21..113999.21 rows=2800 width=71) (actual time=403.197..405.914 rows=2800.00 loops=1)
+  Sort Key: (round(((100.0 * (count(*) FILTER (WHERE ((b.status)::text = 'CANCELLED'::text)))::numeric) / (count(*))::numeric), 2)) DESC
+  Sort Method: quicksort  Memory: 280kB
+  Buffers: shared hit=75922 read=52174, temp read=16238 written=16320
+  ->  Finalize GroupAggregate  (cost=112935.84..113831.89 rows=2800 width=71) (actual time=401.416..405.364 rows=2800.00 loops=1)
+        Group Key: v.venue_id
+        Buffers: shared hit=75919 read=52174, temp read=16238 written=16320
+        ->  Gather Merge  (cost=112935.84..113718.49 rows=6720 width=47) (actual time=401.404..404.523 rows=8400.00 loops=1)
+              Workers Planned: 2
+              Workers Launched: 2
+              Buffers: shared hit=75919 read=52174, temp read=16238 written=16320
+              ->  Sort  (cost=111935.81..111942.81 rows=2800 width=47) (actual time=400.015..400.091 rows=2800.00 loops=3)
+                    Sort Key: v.venue_id
+                    Sort Method: quicksort  Memory: 280kB
+                    Buffers: shared hit=75919 read=52174, temp read=16238 written=16320
+                    Worker 0:  Sort Method: quicksort  Memory: 280kB
+                    Worker 1:  Sort Method: quicksort  Memory: 280kB
+                    ->  Partial HashAggregate  (cost=111747.50..111775.50 rows=2800 width=47) (actual time=399.572..399.713 rows=2800.00 loops=3)
+                          Group Key: v.venue_id
+                          Batches: 1  Memory Usage: 345kB
+                          Buffers: shared hit=75903 read=52174, temp read=16238 written=16320
+                          Worker 0:  Batches: 1  Memory Usage: 345kB
+                          Worker 1:  Batches: 1  Memory Usage: 345kB
+                          ->  Hash Join  (cost=33038.10..107901.31 rows=384619 width=41) (actual time=222.278..370.199 rows=366797.00 loops=3)
+                                Hash Cond: (sc.venue_id = v.venue_id)
+                                Buffers: shared hit=75903 read=52174, temp read=16238 written=16320
+                                ->  Hash Join  (cost=32942.10..106794.16 rows=384619 width=14) (actual time=221.932..342.131 rows=366797.00 loops=3)
+                                      Hash Cond: (s.screen_id = sc.screen_id)
+                                      Buffers: shared hit=75837 read=52141, temp read=16238 written=16320
+                                      ->  Parallel Hash Join  (cost=32651.60..105493.60 rows=384619 width=14) (actual time=221.067..312.241 rows=366797.00 loops=3)
+                                            Hash Cond: (b.show_id = s.show_id)
+                                            Buffers: shared hit=75627 read=52141, temp read=16238 written=16320
+                                            ->  Parallel Seq Scan on bookings b  (cost=0.00..55730.23 rows=1251723 width=14) (actual time=0.061..64.441 rows=1001359.00 loops=3)
+                                                  Buffers: shared hit=282 read=42931
+                                            ->  Parallel Hash  (cost=25926.37..25926.37 rows=409858 width=8) (actual time=70.507..70.507 rows=326660.00 loops=3)
+                                                  Buckets: 262144  Batches: 8  Memory Usage: 6880kB
+                                                  Buffers: shared hit=75345 read=9210, temp written=2992
+                                                  ->  Parallel Index Scan using idx_shows_starts_at on shows s  (cost=0.43..25926.37 rows=409858 width=8) (actual time=0.383..46.503 rows=326660.00 loops=3)
+                                                        Index Cond: ((starts_at >= '2026-06-01 00:00:00+05:30'::timestamp with time zone) AND (starts_at < '2026-07-01 00:00:00+05:30'::timestamp with time zone))
+                                                        Index Searches: 1
+                                                        Buffers: shared hit=75345 read=9210
+                                      ->  Hash  (cost=168.00..168.00 rows=9800 width=8) (actual time=0.854..0.854 rows=9800.00 loops=3)
+                                            Buckets: 16384  Batches: 1  Memory Usage: 511kB
+                                            Buffers: shared hit=210
+                                            ->  Seq Scan on screens sc  (cost=0.00..168.00 rows=9800 width=8) (actual time=0.014..0.422 rows=9800.00 loops=3)
+                                                  Buffers: shared hit=210
+                                ->  Hash  (cost=61.00..61.00 rows=2800 width=31) (actual time=0.340..0.340 rows=2800.00 loops=3)
+                                      Buckets: 4096  Batches: 1  Memory Usage: 205kB
+                                      Buffers: shared hit=66 read=33
+                                      ->  Seq Scan on venues v  (cost=0.00..61.00 rows=2800 width=31) (actual time=0.022..0.180 rows=2800.00 loops=3)
+                                            Buffers: shared hit=66 read=33
+Planning:
+  Buffers: shared hit=586 read=12
+Planning Time: 2.351 ms
+Execution Time: 406.031 ms
+=== R16 run 2 ===
+Sort  (cost=113992.21..113999.21 rows=2800 width=71) (actual time=386.871..390.029 rows=2800.00 loops=1)
+  Sort Key: (round(((100.0 * (count(*) FILTER (WHERE ((b.status)::text = 'CANCELLED'::text)))::numeric) / (count(*))::numeric), 2)) DESC
+  Sort Method: quicksort  Memory: 280kB
+  Buffers: shared hit=85380 read=42649, temp read=16240 written=16304
+  ->  Finalize GroupAggregate  (cost=112935.84..113831.89 rows=2800 width=71) (actual time=384.860..389.450 rows=2800.00 loops=1)
+        Group Key: v.venue_id
+        Buffers: shared hit=85377 read=42649, temp read=16240 written=16304
+        ->  Gather Merge  (cost=112935.84..113718.49 rows=6720 width=47) (actual time=384.849..388.524 rows=8400.00 loops=1)
+              Workers Planned: 2
+              Workers Launched: 2
+              Buffers: shared hit=85377 read=42649, temp read=16240 written=16304
+              ->  Sort  (cost=111935.81..111942.81 rows=2800 width=47) (actual time=383.366..383.480 rows=2800.00 loops=3)
+                    Sort Key: v.venue_id
+                    Sort Method: quicksort  Memory: 280kB
+                    Buffers: shared hit=85377 read=42649, temp read=16240 written=16304
+                    Worker 0:  Sort Method: quicksort  Memory: 280kB
+                    Worker 1:  Sort Method: quicksort  Memory: 280kB
+                    ->  Partial HashAggregate  (cost=111747.50..111775.50 rows=2800 width=47) (actual time=382.930..383.105 rows=2800.00 loops=3)
+                          Group Key: v.venue_id
+                          Batches: 1  Memory Usage: 345kB
+                          Buffers: shared hit=85361 read=42649, temp read=16240 written=16304
+                          Worker 0:  Batches: 1  Memory Usage: 345kB
+                          Worker 1:  Batches: 1  Memory Usage: 345kB
+                          ->  Hash Join  (cost=33038.10..107901.31 rows=384619 width=41) (actual time=199.154..352.759 rows=366797.00 loops=3)
+                                Hash Cond: (sc.venue_id = v.venue_id)
+                                Buffers: shared hit=85361 read=42649, temp read=16240 written=16304
+                                ->  Hash Join  (cost=32942.10..106794.16 rows=384619 width=14) (actual time=198.828..324.030 rows=366797.00 loops=3)
+                                      Hash Cond: (s.screen_id = sc.screen_id)
+                                      Buffers: shared hit=85262 read=42649, temp read=16240 written=16304
+                                      ->  Parallel Hash Join  (cost=32651.60..105493.60 rows=384619 width=14) (actual time=197.996..293.813 rows=366797.00 loops=3)
+                                            Hash Cond: (b.show_id = s.show_id)
+                                            Buffers: shared hit=85052 read=42649, temp read=16240 written=16304
+                                            ->  Parallel Seq Scan on bookings b  (cost=0.00..55730.23 rows=1251723 width=14) (actual time=0.083..61.334 rows=1001359.00 loops=3)
+                                                  Buffers: shared hit=564 read=42649
+                                            ->  Parallel Hash  (cost=25926.37..25926.37 rows=409858 width=8) (actual time=51.610..51.610 rows=326660.00 loops=3)
+                                                  Buckets: 262144  Batches: 8  Memory Usage: 6912kB
+                                                  Buffers: shared hit=84488, temp written=2976
+                                                  ->  Parallel Index Scan using idx_shows_starts_at on shows s  (cost=0.43..25926.37 rows=409858 width=8) (actual time=0.006..28.860 rows=326660.00 loops=3)
+                                                        Index Cond: ((starts_at >= '2026-06-01 00:00:00+05:30'::timestamp with time zone) AND (starts_at < '2026-07-01 00:00:00+05:30'::timestamp with time zone))
+                                                        Index Searches: 1
+                                                        Buffers: shared hit=84488
+                                      ->  Hash  (cost=168.00..168.00 rows=9800 width=8) (actual time=0.817..0.818 rows=9800.00 loops=3)
+                                            Buckets: 16384  Batches: 1  Memory Usage: 511kB
+                                            Buffers: shared hit=210
+                                            ->  Seq Scan on screens sc  (cost=0.00..168.00 rows=9800 width=8) (actual time=0.015..0.397 rows=9800.00 loops=3)
+                                                  Buffers: shared hit=210
+                                ->  Hash  (cost=61.00..61.00 rows=2800 width=31) (actual time=0.320..0.321 rows=2800.00 loops=3)
+                                      Buckets: 4096  Batches: 1  Memory Usage: 205kB
+                                      Buffers: shared hit=99
+                                      ->  Seq Scan on venues v  (cost=0.00..61.00 rows=2800 width=31) (actual time=0.014..0.159 rows=2800.00 loops=3)
+                                            Buffers: shared hit=99
+Planning:
+  Buffers: shared hit=598
+Planning Time: 1.109 ms
+Execution Time: 390.141 ms
+=== R16 run 3 ===
+Sort  (cost=113992.21..113999.21 rows=2800 width=71) (actual time=379.624..383.307 rows=2800.00 loops=1)
+  Sort Key: (round(((100.0 * (count(*) FILTER (WHERE ((b.status)::text = 'CANCELLED'::text)))::numeric) / (count(*))::numeric), 2)) DESC
+  Sort Method: quicksort  Memory: 280kB
+  Buffers: shared hit=85643 read=42367, temp read=16236 written=16328
+  ->  Finalize GroupAggregate  (cost=112935.84..113831.89 rows=2800 width=71) (actual time=377.547..382.729 rows=2800.00 loops=1)
+        Group Key: v.venue_id
+        Buffers: shared hit=85640 read=42367, temp read=16236 written=16328
+        ->  Gather Merge  (cost=112935.84..113718.49 rows=6720 width=47) (actual time=377.534..381.721 rows=8400.00 loops=1)
+              Workers Planned: 2
+              Workers Launched: 2
+              Buffers: shared hit=85640 read=42367, temp read=16236 written=16328
+              ->  Sort  (cost=111935.81..111942.81 rows=2800 width=47) (actual time=376.154..376.230 rows=2800.00 loops=3)
+                    Sort Key: v.venue_id
+                    Sort Method: quicksort  Memory: 280kB
+                    Buffers: shared hit=85640 read=42367, temp read=16236 written=16328
+                    Worker 0:  Sort Method: quicksort  Memory: 280kB
+                    Worker 1:  Sort Method: quicksort  Memory: 280kB
+                    ->  Partial HashAggregate  (cost=111747.50..111775.50 rows=2800 width=47) (actual time=375.740..375.868 rows=2800.00 loops=3)
+                          Group Key: v.venue_id
+                          Batches: 1  Memory Usage: 345kB
+                          Buffers: shared hit=85624 read=42367, temp read=16236 written=16328
+                          Worker 0:  Batches: 1  Memory Usage: 345kB
+                          Worker 1:  Batches: 1  Memory Usage: 345kB
+                          ->  Hash Join  (cost=33038.10..107901.31 rows=384619 width=41) (actual time=199.440..346.322 rows=366797.00 loops=3)
+                                Hash Cond: (sc.venue_id = v.venue_id)
+                                Buffers: shared hit=85624 read=42367, temp read=16236 written=16328
+                                ->  Hash Join  (cost=32942.10..106794.16 rows=384619 width=14) (actual time=199.107..318.499 rows=366797.00 loops=3)
+                                      Hash Cond: (s.screen_id = sc.screen_id)
+                                      Buffers: shared hit=85525 read=42367, temp read=16236 written=16328
+                                      ->  Parallel Hash Join  (cost=32651.60..105493.60 rows=384619 width=14) (actual time=198.225..289.154 rows=366797.00 loops=3)
+                                            Hash Cond: (b.show_id = s.show_id)
+                                            Buffers: shared hit=85315 read=42367, temp read=16236 written=16328
+                                            ->  Parallel Seq Scan on bookings b  (cost=0.00..55730.23 rows=1251723 width=14) (actual time=0.067..62.756 rows=1001359.00 loops=3)
+                                                  Buffers: shared hit=846 read=42367
+                                            ->  Parallel Hash  (cost=25926.37..25926.37 rows=409858 width=8) (actual time=46.615..46.615 rows=326660.00 loops=3)
+                                                  Buckets: 262144  Batches: 8  Memory Usage: 6880kB
+                                                  Buffers: shared hit=84469, temp written=2984
+                                                  ->  Parallel Index Scan using idx_shows_starts_at on shows s  (cost=0.43..25926.37 rows=409858 width=8) (actual time=0.005..27.089 rows=326660.00 loops=3)
+                                                        Index Cond: ((starts_at >= '2026-06-01 00:00:00+05:30'::timestamp with time zone) AND (starts_at < '2026-07-01 00:00:00+05:30'::timestamp with time zone))
+                                                        Index Searches: 1
+                                                        Buffers: shared hit=84469
+                                      ->  Hash  (cost=168.00..168.00 rows=9800 width=8) (actual time=0.871..0.871 rows=9800.00 loops=3)
+                                            Buckets: 16384  Batches: 1  Memory Usage: 511kB
+                                            Buffers: shared hit=210
+                                            ->  Seq Scan on screens sc  (cost=0.00..168.00 rows=9800 width=8) (actual time=0.012..0.412 rows=9800.00 loops=3)
+                                                  Buffers: shared hit=210
+                                ->  Hash  (cost=61.00..61.00 rows=2800 width=31) (actual time=0.327..0.327 rows=2800.00 loops=3)
+                                      Buckets: 4096  Batches: 1  Memory Usage: 205kB
+                                      Buffers: shared hit=99
+                                      ->  Seq Scan on venues v  (cost=0.00..61.00 rows=2800 width=31) (actual time=0.013..0.161 rows=2800.00 loops=3)
+                                            Buffers: shared hit=99
+Planning:
+  Buffers: shared hit=598
+Planning Time: 1.142 ms
+Execution Time: 383.423 ms

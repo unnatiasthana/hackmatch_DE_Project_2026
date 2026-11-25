@@ -1,0 +1,27 @@
+=== R23 run 1 ===
+Index Scan using uq_customers_phone on customers  (cost=0.42..8.44 rows=1 width=20) (actual time=0.591..0.591 rows=1.00 loops=1)
+  Index Cond: ((phone)::text = '7700001331'::text)
+  Index Searches: 1
+  Buffers: shared read=4
+Planning:
+  Buffers: shared hit=95 read=8
+Planning Time: 0.752 ms
+Execution Time: 0.607 ms
+=== R23 run 2 ===
+Index Scan using uq_customers_phone on customers  (cost=0.42..8.44 rows=1 width=20) (actual time=0.009..0.009 rows=1.00 loops=1)
+  Index Cond: ((phone)::text = '7700001331'::text)
+  Index Searches: 1
+  Buffers: shared hit=4
+Planning:
+  Buffers: shared hit=103
+Planning Time: 0.195 ms
+Execution Time: 0.023 ms
+=== R23 run 3 ===
+Index Scan using uq_customers_phone on customers  (cost=0.42..8.44 rows=1 width=20) (actual time=0.009..0.009 rows=1.00 loops=1)
+  Index Cond: ((phone)::text = '7700001331'::text)
+  Index Searches: 1
+  Buffers: shared hit=4
+Planning:
+  Buffers: shared hit=103
+Planning Time: 0.179 ms
+Execution Time: 0.022 ms

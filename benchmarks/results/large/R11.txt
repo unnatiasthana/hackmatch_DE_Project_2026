@@ -1,0 +1,138 @@
+=== R11 run 1 ===
+Sort  (cost=164707.74..164707.75 rows=4 width=71) (actual time=881.898..892.402 rows=4.00 loops=1)
+  Sort Key: (sum(bs.price)) DESC
+  Sort Method: quicksort  Memory: 25kB
+  Buffers: shared hit=161 read=50424, temp read=31486 written=31640
+  ->  Finalize GroupAggregate  (cost=164706.32..164707.70 rows=4 width=71) (actual time=881.885..892.395 rows=4.00 loops=1)
+        Group Key: sc.screen_type
+        Buffers: shared hit=158 read=50424, temp read=31486 written=31640
+        ->  Gather Merge  (cost=164706.32..164707.48 rows=10 width=71) (actual time=881.877..892.384 rows=12.00 loops=1)
+              Workers Planned: 2
+              Workers Launched: 2
+              Buffers: shared hit=158 read=50424, temp read=31486 written=31640
+              ->  Sort  (cost=163706.29..163706.30 rows=4 width=71) (actual time=879.229..879.249 rows=4.00 loops=3)
+                    Sort Key: sc.screen_type
+                    Sort Method: quicksort  Memory: 25kB
+                    Buffers: shared hit=158 read=50424, temp read=31486 written=31640
+                    Worker 0:  Sort Method: quicksort  Memory: 25kB
+                    Worker 1:  Sort Method: quicksort  Memory: 25kB
+                    ->  Partial HashAggregate  (cost=163706.19..163706.25 rows=4 width=71) (actual time=879.204..879.224 rows=4.00 loops=3)
+                          Group Key: sc.screen_type
+                          Batches: 1  Memory Usage: 32kB
+                          Buffers: shared hit=140 read=50424, temp read=31486 written=31640
+                          Worker 0:  Batches: 1  Memory Usage: 32kB
+                          Worker 1:  Batches: 1  Memory Usage: 32kB
+                          ->  Hash Join  (cost=33701.82..138633.91 rows=2507228 width=19) (actual time=357.081..699.962 rows=2005648.67 loops=3)
+                                Hash Cond: (se.screen_id = sc.screen_id)
+                                Buffers: shared hit=140 read=50424, temp read=31486 written=31640
+                                ->  Parallel Hash Join  (cost=33411.32..131759.09 rows=2507228 width=16) (actual time=356.178..546.212 rows=2005648.67 loops=3)
+                                      Hash Cond: (bs.seat_id = se.seat_id)
+                                      Buffers: shared read=50354, temp read=31486 written=31640
+                                      ->  Parallel Seq Scan on booking_seats bs  (cost=0.00..63456.28 rows=2507228 width=9) (actual time=0.058..84.703 rows=2005648.67 loops=3)
+                                            Buffers: shared read=38384
+                                      ->  Parallel Hash  (cost=19799.92..19799.92 rows=782992 width=15) (actual time=88.576..88.576 rows=626394.00 loops=3)
+                                            Buckets: 262144  Batches: 16  Memory Usage: 7776kB
+                                            Buffers: shared read=11970, temp written=8016
+                                            ->  Parallel Seq Scan on seats se  (cost=0.00..19799.92 rows=782992 width=15) (actual time=0.048..27.391 rows=626394.00 loops=3)
+                                                  Buffers: shared read=11970
+                                ->  Hash  (cost=168.00..168.00 rows=9800 width=11) (actual time=0.887..0.887 rows=9800.00 loops=3)
+                                      Buckets: 16384  Batches: 1  Memory Usage: 577kB
+                                      Buffers: shared hit=140 read=70
+                                      ->  Seq Scan on screens sc  (cost=0.00..168.00 rows=9800 width=11) (actual time=0.023..0.420 rows=9800.00 loops=3)
+                                            Buffers: shared hit=140 read=70
+Planning:
+  Buffers: shared hit=364 read=52
+Planning Time: 2.190 ms
+Execution Time: 892.461 ms
+=== R11 run 2 ===
+Sort  (cost=164707.74..164707.75 rows=4 width=71) (actual time=823.175..828.863 rows=4.00 loops=1)
+  Sort Key: (sum(bs.price)) DESC
+  Sort Method: quicksort  Memory: 25kB
+  Buffers: shared hit=795 read=49790, temp read=31478 written=31628
+  ->  Finalize GroupAggregate  (cost=164706.32..164707.70 rows=4 width=71) (actual time=823.163..828.856 rows=4.00 loops=1)
+        Group Key: sc.screen_type
+        Buffers: shared hit=792 read=49790, temp read=31478 written=31628
+        ->  Gather Merge  (cost=164706.32..164707.48 rows=10 width=71) (actual time=823.157..828.846 rows=12.00 loops=1)
+              Workers Planned: 2
+              Workers Launched: 2
+              Buffers: shared hit=792 read=49790, temp read=31478 written=31628
+              ->  Sort  (cost=163706.29..163706.30 rows=4 width=71) (actual time=821.842..821.853 rows=4.00 loops=3)
+                    Sort Key: sc.screen_type
+                    Sort Method: quicksort  Memory: 25kB
+                    Buffers: shared hit=792 read=49790, temp read=31478 written=31628
+                    Worker 0:  Sort Method: quicksort  Memory: 25kB
+                    Worker 1:  Sort Method: quicksort  Memory: 25kB
+                    ->  Partial HashAggregate  (cost=163706.19..163706.25 rows=4 width=71) (actual time=821.823..821.835 rows=4.00 loops=3)
+                          Group Key: sc.screen_type
+                          Batches: 1  Memory Usage: 32kB
+                          Buffers: shared hit=774 read=49790, temp read=31478 written=31628
+                          Worker 0:  Batches: 1  Memory Usage: 32kB
+                          Worker 1:  Batches: 1  Memory Usage: 32kB
+                          ->  Hash Join  (cost=33701.82..138633.91 rows=2507228 width=19) (actual time=325.983..658.304 rows=2005648.67 loops=3)
+                                Hash Cond: (se.screen_id = sc.screen_id)
+                                Buffers: shared hit=774 read=49790, temp read=31478 written=31628
+                                ->  Parallel Hash Join  (cost=33411.32..131759.09 rows=2507228 width=16) (actual time=325.058..507.460 rows=2005648.67 loops=3)
+                                      Hash Cond: (bs.seat_id = se.seat_id)
+                                      Buffers: shared hit=564 read=49790, temp read=31478 written=31628
+                                      ->  Parallel Seq Scan on booking_seats bs  (cost=0.00..63456.28 rows=2507228 width=9) (actual time=0.052..76.435 rows=2005648.67 loops=3)
+                                            Buffers: shared hit=282 read=38102
+                                      ->  Parallel Hash  (cost=19799.92..19799.92 rows=782992 width=15) (actual time=81.561..81.562 rows=626394.00 loops=3)
+                                            Buckets: 262144  Batches: 16  Memory Usage: 7776kB
+                                            Buffers: shared hit=282 read=11688, temp written=8012
+                                            ->  Parallel Seq Scan on seats se  (cost=0.00..19799.92 rows=782992 width=15) (actual time=0.040..27.309 rows=626394.00 loops=3)
+                                                  Buffers: shared hit=282 read=11688
+                                ->  Hash  (cost=168.00..168.00 rows=9800 width=11) (actual time=0.914..0.914 rows=9800.00 loops=3)
+                                      Buckets: 16384  Batches: 1  Memory Usage: 577kB
+                                      Buffers: shared hit=210
+                                      ->  Seq Scan on screens sc  (cost=0.00..168.00 rows=9800 width=11) (actual time=0.013..0.395 rows=9800.00 loops=3)
+                                            Buffers: shared hit=210
+Planning:
+  Buffers: shared hit=416
+Planning Time: 0.696 ms
+Execution Time: 828.930 ms
+=== R11 run 3 ===
+Sort  (cost=164707.74..164707.75 rows=4 width=71) (actual time=924.385..947.492 rows=4.00 loops=1)
+  Sort Key: (sum(bs.price)) DESC
+  Sort Method: quicksort  Memory: 25kB
+  Buffers: shared hit=1359 read=49226, temp read=31477 written=31644
+  ->  Finalize GroupAggregate  (cost=164706.32..164707.70 rows=4 width=71) (actual time=924.354..947.474 rows=4.00 loops=1)
+        Group Key: sc.screen_type
+        Buffers: shared hit=1356 read=49226, temp read=31477 written=31644
+        ->  Gather Merge  (cost=164706.32..164707.48 rows=10 width=71) (actual time=924.349..947.458 rows=12.00 loops=1)
+              Workers Planned: 2
+              Workers Launched: 2
+              Buffers: shared hit=1356 read=49226, temp read=31477 written=31644
+              ->  Sort  (cost=163706.29..163706.30 rows=4 width=71) (actual time=922.982..922.983 rows=4.00 loops=3)
+                    Sort Key: sc.screen_type
+                    Sort Method: quicksort  Memory: 25kB
+                    Buffers: shared hit=1356 read=49226, temp read=31477 written=31644
+                    Worker 0:  Sort Method: quicksort  Memory: 25kB
+                    Worker 1:  Sort Method: quicksort  Memory: 25kB
+                    ->  Partial HashAggregate  (cost=163706.19..163706.25 rows=4 width=71) (actual time=922.963..922.964 rows=4.00 loops=3)
+                          Group Key: sc.screen_type
+                          Batches: 1  Memory Usage: 32kB
+                          Buffers: shared hit=1338 read=49226, temp read=31477 written=31644
+                          Worker 0:  Batches: 1  Memory Usage: 32kB
+                          Worker 1:  Batches: 1  Memory Usage: 32kB
+                          ->  Hash Join  (cost=33701.82..138633.91 rows=2507228 width=19) (actual time=432.101..760.741 rows=2005648.67 loops=3)
+                                Hash Cond: (se.screen_id = sc.screen_id)
+                                Buffers: shared hit=1338 read=49226, temp read=31477 written=31644
+                                ->  Parallel Hash Join  (cost=33411.32..131759.09 rows=2507228 width=16) (actual time=431.172..612.386 rows=2005648.67 loops=3)
+                                      Hash Cond: (bs.seat_id = se.seat_id)
+                                      Buffers: shared hit=1128 read=49226, temp read=31477 written=31644
+                                      ->  Parallel Seq Scan on booking_seats bs  (cost=0.00..63456.28 rows=2507228 width=9) (actual time=0.066..79.061 rows=2005648.67 loops=3)
+                                            Buffers: shared hit=564 read=37820
+                                      ->  Parallel Hash  (cost=19799.92..19799.92 rows=782992 width=15) (actual time=88.651..88.651 rows=626394.00 loops=3)
+                                            Buckets: 262144  Batches: 16  Memory Usage: 7776kB
+                                            Buffers: shared hit=564 read=11406, temp written=8012
+                                            ->  Parallel Seq Scan on seats se  (cost=0.00..19799.92 rows=782992 width=15) (actual time=0.039..27.904 rows=626394.00 loops=3)
+                                                  Buffers: shared hit=564 read=11406
+                                ->  Hash  (cost=168.00..168.00 rows=9800 width=11) (actual time=0.918..0.918 rows=9800.00 loops=3)
+                                      Buckets: 16384  Batches: 1  Memory Usage: 577kB
+                                      Buffers: shared hit=210
+                                      ->  Seq Scan on screens sc  (cost=0.00..168.00 rows=9800 width=11) (actual time=0.013..0.404 rows=9800.00 loops=3)
+                                            Buffers: shared hit=210
+Planning:
+  Buffers: shared hit=416
+Planning Time: 0.712 ms
+Execution Time: 947.546 ms

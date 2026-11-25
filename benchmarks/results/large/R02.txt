@@ -1,0 +1,81 @@
+=== R02 run 1 ===
+Sort  (cost=67.65..67.66 rows=1 width=54) (actual time=1.896..1.896 rows=2.00 loops=1)
+  Sort Key: v.venue_name, s.starts_at
+  Sort Method: quicksort  Memory: 25kB
+  Buffers: shared hit=108 read=20
+  ->  Nested Loop  (cost=1.00..67.64 rows=1 width=54) (actual time=1.080..1.875 rows=2.00 loops=1)
+        Buffers: shared hit=102 read=20
+        ->  Nested Loop  (cost=0.72..66.06 rows=5 width=31) (actual time=0.328..1.584 rows=17.00 loops=1)
+              Buffers: shared hit=57 read=14
+              ->  Index Scan using idx_shows_movie_starts on shows s  (cost=0.43..24.54 rows=5 width=24) (actual time=0.170..0.194 rows=17.00 loops=1)
+                    Index Cond: ((movie_id = 2) AND (starts_at >= '2026-07-02 00:00:00+05:30'::timestamp with time zone) AND (starts_at < '2026-07-03 00:00:00+05:30'::timestamp with time zone))
+                    Index Searches: 1
+                    Buffers: shared hit=19 read=1
+              ->  Index Scan using screens_pkey on screens sc  (cost=0.29..8.30 rows=1 width=15) (actual time=0.081..0.081 rows=1.00 loops=17)
+                    Index Cond: (screen_id = s.screen_id)
+                    Index Searches: 17
+                    Buffers: shared hit=38 read=13
+        ->  Index Scan using venues_pkey on venues v  (cost=0.28..0.32 rows=1 width=31) (actual time=0.017..0.017 rows=0.12 loops=17)
+              Index Cond: (venue_id = sc.venue_id)
+              Filter: (city_id = 1)
+              Rows Removed by Filter: 1
+              Index Searches: 17
+              Buffers: shared hit=45 read=6
+Planning:
+  Buffers: shared hit=444
+Planning Time: 0.840 ms
+Execution Time: 1.928 ms
+=== R02 run 2 ===
+Sort  (cost=67.65..67.66 rows=1 width=54) (actual time=0.136..0.136 rows=2.00 loops=1)
+  Sort Key: v.venue_name, s.starts_at
+  Sort Method: quicksort  Memory: 25kB
+  Buffers: shared hit=128
+  ->  Nested Loop  (cost=1.00..67.64 rows=1 width=54) (actual time=0.057..0.119 rows=2.00 loops=1)
+        Buffers: shared hit=122
+        ->  Nested Loop  (cost=0.72..66.06 rows=5 width=31) (actual time=0.015..0.079 rows=17.00 loops=1)
+              Buffers: shared hit=71
+              ->  Index Scan using idx_shows_movie_starts on shows s  (cost=0.43..24.54 rows=5 width=24) (actual time=0.008..0.030 rows=17.00 loops=1)
+                    Index Cond: ((movie_id = 2) AND (starts_at >= '2026-07-02 00:00:00+05:30'::timestamp with time zone) AND (starts_at < '2026-07-03 00:00:00+05:30'::timestamp with time zone))
+                    Index Searches: 1
+                    Buffers: shared hit=20
+              ->  Index Scan using screens_pkey on screens sc  (cost=0.29..8.30 rows=1 width=15) (actual time=0.003..0.003 rows=1.00 loops=17)
+                    Index Cond: (screen_id = s.screen_id)
+                    Index Searches: 17
+                    Buffers: shared hit=51
+        ->  Index Scan using venues_pkey on venues v  (cost=0.28..0.32 rows=1 width=31) (actual time=0.002..0.002 rows=0.12 loops=17)
+              Index Cond: (venue_id = sc.venue_id)
+              Filter: (city_id = 1)
+              Rows Removed by Filter: 1
+              Index Searches: 17
+              Buffers: shared hit=51
+Planning:
+  Buffers: shared hit=444
+Planning Time: 0.761 ms
+Execution Time: 0.164 ms
+=== R02 run 3 ===
+Sort  (cost=67.65..67.66 rows=1 width=54) (actual time=0.128..0.128 rows=2.00 loops=1)
+  Sort Key: v.venue_name, s.starts_at
+  Sort Method: quicksort  Memory: 25kB
+  Buffers: shared hit=128
+  ->  Nested Loop  (cost=1.00..67.64 rows=1 width=54) (actual time=0.051..0.111 rows=2.00 loops=1)
+        Buffers: shared hit=122
+        ->  Nested Loop  (cost=0.72..66.06 rows=5 width=31) (actual time=0.013..0.073 rows=17.00 loops=1)
+              Buffers: shared hit=71
+              ->  Index Scan using idx_shows_movie_starts on shows s  (cost=0.43..24.54 rows=5 width=24) (actual time=0.007..0.026 rows=17.00 loops=1)
+                    Index Cond: ((movie_id = 2) AND (starts_at >= '2026-07-02 00:00:00+05:30'::timestamp with time zone) AND (starts_at < '2026-07-03 00:00:00+05:30'::timestamp with time zone))
+                    Index Searches: 1
+                    Buffers: shared hit=20
+              ->  Index Scan using screens_pkey on screens sc  (cost=0.29..8.30 rows=1 width=15) (actual time=0.002..0.002 rows=1.00 loops=17)
+                    Index Cond: (screen_id = s.screen_id)
+                    Index Searches: 17
+                    Buffers: shared hit=51
+        ->  Index Scan using venues_pkey on venues v  (cost=0.28..0.32 rows=1 width=31) (actual time=0.002..0.002 rows=0.12 loops=17)
+              Index Cond: (venue_id = sc.venue_id)
+              Filter: (city_id = 1)
+              Rows Removed by Filter: 1
+              Index Searches: 17
+              Buffers: shared hit=51
+Planning:
+  Buffers: shared hit=444
+Planning Time: 0.717 ms
+Execution Time: 0.154 ms

@@ -1,0 +1,66 @@
+=== R10 run 1 ===
+Sort  (cost=124909.95..125725.57 rows=326247 width=44) (actual time=748.234..748.317 rows=5021.00 loops=1)
+  Sort Key: ((sub.next_starts - sub.ends_at)), sub.screen_id
+  Sort Method: quicksort  Memory: 506kB
+  Buffers: shared hit=12456 read=20698 written=16
+  ->  Subquery Scan on sub  (cost=0.50..84994.89 rows=326247 width=44) (actual time=0.739..747.206 rows=5021.00 loops=1)
+        Filter: ((sub.next_starts IS NOT NULL) AND ((sub.next_starts - sub.ends_at) < '00:30:00'::interval))
+        Rows Removed by Filter: 974959
+        Buffers: shared hit=12448 read=20698 written=16
+        ->  WindowAgg  (cost=0.50..69424.39 rows=983659 width=36) (actual time=0.049..720.004 rows=979980.00 loops=1)
+              Window: w AS (PARTITION BY shows.screen_id ORDER BY shows.starts_at)
+              Storage: Memory  Maximum Storage: 17kB
+              Buffers: shared hit=12448 read=20698 written=16
+              ->  Index Only Scan using idx_shows_screen_starts on shows  (cost=0.43..49751.21 rows=983659 width=24) (actual time=0.042..557.087 rows=979980.00 loops=1)
+                    Index Cond: ((starts_at >= '2026-06-01 00:00:00+05:30'::timestamp with time zone) AND (starts_at < '2026-07-01 00:00:00+05:30'::timestamp with time zone))
+                    Heap Fetches: 0
+                    Index Searches: 6275
+                    Buffers: shared hit=12448 read=20698 written=16
+Planning:
+  Buffers: shared hit=236
+Planning Time: 0.390 ms
+Execution Time: 748.436 ms
+=== R10 run 2 ===
+Sort  (cost=124909.95..125725.57 rows=326247 width=44) (actual time=325.591..325.682 rows=5021.00 loops=1)
+  Sort Key: ((sub.next_starts - sub.ends_at)), sub.screen_id
+  Sort Method: quicksort  Memory: 506kB
+  Buffers: shared hit=12568 read=20586
+  ->  Subquery Scan on sub  (cost=0.50..84994.89 rows=326247 width=44) (actual time=0.119..324.461 rows=5021.00 loops=1)
+        Filter: ((sub.next_starts IS NOT NULL) AND ((sub.next_starts - sub.ends_at) < '00:30:00'::interval))
+        Rows Removed by Filter: 974959
+        Buffers: shared hit=12560 read=20586
+        ->  WindowAgg  (cost=0.50..69424.39 rows=983659 width=36) (actual time=0.042..294.036 rows=979980.00 loops=1)
+              Window: w AS (PARTITION BY shows.screen_id ORDER BY shows.starts_at)
+              Storage: Memory  Maximum Storage: 17kB
+              Buffers: shared hit=12560 read=20586
+              ->  Index Only Scan using idx_shows_screen_starts on shows  (cost=0.43..49751.21 rows=983659 width=24) (actual time=0.037..108.590 rows=979980.00 loops=1)
+                    Index Cond: ((starts_at >= '2026-06-01 00:00:00+05:30'::timestamp with time zone) AND (starts_at < '2026-07-01 00:00:00+05:30'::timestamp with time zone))
+                    Heap Fetches: 0
+                    Index Searches: 6275
+                    Buffers: shared hit=12560 read=20586
+Planning:
+  Buffers: shared hit=235 read=1
+Planning Time: 0.410 ms
+Execution Time: 325.808 ms
+=== R10 run 3 ===
+Sort  (cost=124909.95..125725.57 rows=326247 width=44) (actual time=328.519..328.609 rows=5021.00 loops=1)
+  Sort Key: ((sub.next_starts - sub.ends_at)), sub.screen_id
+  Sort Method: quicksort  Memory: 506kB
+  Buffers: shared hit=12563 read=20591
+  ->  Subquery Scan on sub  (cost=0.50..84994.89 rows=326247 width=44) (actual time=0.199..327.439 rows=5021.00 loops=1)
+        Filter: ((sub.next_starts IS NOT NULL) AND ((sub.next_starts - sub.ends_at) < '00:30:00'::interval))
+        Rows Removed by Filter: 974959
+        Buffers: shared hit=12555 read=20591
+        ->  WindowAgg  (cost=0.50..69424.39 rows=983659 width=36) (actual time=0.070..297.544 rows=979980.00 loops=1)
+              Window: w AS (PARTITION BY shows.screen_id ORDER BY shows.starts_at)
+              Storage: Memory  Maximum Storage: 17kB
+              Buffers: shared hit=12555 read=20591
+              ->  Index Only Scan using idx_shows_screen_starts on shows  (cost=0.43..49751.21 rows=983659 width=24) (actual time=0.062..117.689 rows=979980.00 loops=1)
+                    Index Cond: ((starts_at >= '2026-06-01 00:00:00+05:30'::timestamp with time zone) AND (starts_at < '2026-07-01 00:00:00+05:30'::timestamp with time zone))
+                    Heap Fetches: 0
+                    Index Searches: 6275
+                    Buffers: shared hit=12555 read=20591
+Planning:
+  Buffers: shared hit=235 read=1
+Planning Time: 0.649 ms
+Execution Time: 328.760 ms
