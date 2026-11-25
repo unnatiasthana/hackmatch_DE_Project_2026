@@ -9,7 +9,7 @@
 --   R10  — self-join rewritten with LEAD() window function
 --   R12  — added partial index filter hint via CTE
 --   R13  — NOT IN replaced with NOT EXISTS (fixes NULL trap)
---   R17  — rewritten with LEFT JOIN / IS NULL anti-join pattern
+--   R17  — Phase 5: per-seat NOT EXISTS (the Phase 4 LEFT JOIN / IS NULL version missed target on large data)
 --   R18  — EXTRACT(YEAR ...) replaced with timestamp range (SARGable)
 --   R19  — correlated subquery replaced with LEFT JOIN aggregate
 --   R20  — booked_at::date BETWEEN replaced with timestamp range
@@ -196,19 +196,21 @@ ORDER BY cancel_pct DESC;
 
 -- @R17
 -- Cinema operations: seats of screen 101 never sold in June 2026
--- CHANGED: NOT EXISTS subquery → LEFT JOIN / IS NULL anti-join.
--- Lets the planner use a hash anti-join instead of a nested-loop with
--- per-row subquery execution.
+-- CHANGED (Phase 5): per-seat correlated NOT EXISTS, probed through
+-- idx_booking_seats_seat_id (seat_id) INCLUDE (show_id) as an Index Only Scan.
+-- The Phase 4 LEFT JOIN / SELECT DISTINCT version built the set of seats sold
+-- in June for ALL screens before keeping screen 101's 40 seats: 29 ms on seed,
+-- 544 ms on large (target 250 ms). This version: 0.23 ms seed, 2.5 ms large.
+-- Same 27 rows (EXCEPT both ways = 0). See docs/05_scalability_report.md §3.1.
 SELECT se.seat_id, se.row_label, se.seat_number, se.seat_class
 FROM seats se
-LEFT JOIN (
-    SELECT DISTINCT bs.seat_id
-    FROM booking_seats bs
-    JOIN shows s ON s.show_id = bs.show_id
-    WHERE s.starts_at >= '2026-06-01' AND s.starts_at < '2026-07-01'
-) sold ON sold.seat_id = se.seat_id
 WHERE se.screen_id = 101
-  AND sold.seat_id IS NULL
+  AND NOT EXISTS (
+        SELECT 1
+        FROM booking_seats bs
+        JOIN shows s ON s.show_id = bs.show_id
+        WHERE bs.seat_id = se.seat_id
+          AND s.starts_at >= '2026-06-01' AND s.starts_at < '2026-07-01')
 ORDER BY se.row_label, se.seat_number;
 
 -- @R18
